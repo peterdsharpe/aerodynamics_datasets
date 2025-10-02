@@ -58,8 +58,11 @@ def download_and_extract(
     if zip_path.exists():
         print(f"Extracting {description}...")
         with zipfile.ZipFile(zip_path, "r") as zip_ref:
-            zip_ref.extractall()
+            zip_ref.extractall(
+                path=extracted_path,
+            )
         zip_path.unlink()  # Remove the zip file after extraction
+
 
 if __name__ == "__main__":
     print("Downloading AirfRANS dataset...")
@@ -73,7 +76,6 @@ if __name__ == "__main__":
         description="main dataset",
     )
 
-    # Uncomment the following to also download OpenFOAM dataset
     download_and_extract(
         zip_file=airfrans_dir / "of_dataset.zip",
         url="https://data.isir.upmc.fr/extrality/NeurIPS_2022/OF_dataset.zip",
