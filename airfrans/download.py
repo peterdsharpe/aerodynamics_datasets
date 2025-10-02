@@ -13,7 +13,7 @@ from tqdm import tqdm
 
 
 def download_and_extract(
-    zip_file: str, url: str, extracted_dir: str, description: str
+    zip_file: Path | str, url: str, extracted_dir: Path | str, description: str
 ) -> None:
     """Download and extract dataset if not already present.
 
@@ -61,24 +61,24 @@ def download_and_extract(
             zip_ref.extractall()
         zip_path.unlink()  # Remove the zip file after extraction
 
+if __name__ == "__main__":
+    print("Downloading AirfRANS dataset...")
 
-### Main execution
-print("Downloading AirfRANS dataset...")
+    airfrans_dir = Path(__file__).parent
 
-# Download and extract main dataset
-download_and_extract(
-    zip_file="dataset.zip",
-    url="https://data.isir.upmc.fr/extrality/NeurIPS_2022/Dataset.zip",
-    extracted_dir="Dataset",
-    description="main dataset",
-)
+    download_and_extract(
+        zip_file=airfrans_dir / "dataset.zip",
+        url="https://data.isir.upmc.fr/extrality/NeurIPS_2022/Dataset.zip",
+        extracted_dir=airfrans_dir / "Dataset",
+        description="main dataset",
+    )
 
-# Uncomment the following to also download OpenFOAM dataset
-download_and_extract(
-    zip_file="of_dataset.zip",
-    url="https://data.isir.upmc.fr/extrality/NeurIPS_2022/OF_dataset.zip",
-    extracted_dir="OF_Dataset",
-    description="OpenFOAM dataset",
-)
+    # Uncomment the following to also download OpenFOAM dataset
+    download_and_extract(
+        zip_file=airfrans_dir / "of_dataset.zip",
+        url="https://data.isir.upmc.fr/extrality/NeurIPS_2022/OF_dataset.zip",
+        extracted_dir=airfrans_dir / "OF_Dataset",
+        description="OpenFOAM dataset",
+    )
 
-print("Dataset download and extraction complete!")
+    print("Dataset download and extraction complete!")
